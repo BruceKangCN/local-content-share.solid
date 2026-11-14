@@ -32,19 +32,22 @@ export default function DropOverlay(props: DropOverlayProps) {
     }
   };
 
-  // dragover repeats while the file is over the page, so it both reveals the
-  // mask and keeps the browser from opening the dropped file.
   const onDragOver = (event: DragEvent) => {
     if (!incudeFile(event)) {
       return;
     }
+    // Required to mark the page as a drop target; without it drop never fires.
     event.preventDefault();
+    // dragover repeats while the file is over the page, so it reveals the mask
+    // and restores it after a dragleave.
     setActive(!pending());
     event.dataTransfer!.dropEffect = pending() ? "none" : "copy";
   };
 
-  // Only a window-level dragleave has no relatedTarget; child transitions do.
   const onDragLeave = (event: DragEvent) => {
+    // `dragleave` triggers during element transitions. Only deactivating when
+    // leaving window by checking `relatedTarget`. It's `null` when leaving
+    // window.
     if (event.relatedTarget === null) {
       setActive(false);
     }
@@ -54,6 +57,7 @@ export default function DropOverlay(props: DropOverlayProps) {
     if (!incudeFile(event)) {
       return;
     }
+    // Stop the browser from opening the dropped file.
     event.preventDefault();
     setActive(false);
     if (!pending()) {
