@@ -33,7 +33,7 @@ export default function DropOverlay(props: DropOverlayProps) {
   };
 
   const onDragOver = (event: DragEvent) => {
-    if (!incudeFile(event)) {
+    if (!includeFile(event)) {
       return;
     }
     // Required to mark the page as a drop target; without it drop never fires.
@@ -54,7 +54,7 @@ export default function DropOverlay(props: DropOverlayProps) {
   };
 
   const onDrop = (event: DragEvent) => {
-    if (!incudeFile(event)) {
+    if (!includeFile(event)) {
       return;
     }
     // Stop the browser from opening the dropped file.
@@ -107,6 +107,6 @@ export default function DropOverlay(props: DropOverlayProps) {
   </>;
 }
 
-function incudeFile(event: DragEvent) {
+function includeFile(event: DragEvent) {
   return event.dataTransfer?.types.includes("Files") ?? false;
 }
