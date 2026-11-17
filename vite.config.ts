@@ -13,7 +13,9 @@ export default defineConfig({
       // page under `vite dev`. It is dev-only; production never includes it.
       start: { nodeServer: true, devtools: false },
       ssr: true,
-      serverFunctions: true,
+      serverFunctions: {
+        serverSetup: "src/server-functions-setup.ts",
+      },
       diagnostics: true,
     }),
   ],
